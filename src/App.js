@@ -141,14 +141,20 @@ const WaveShaderMaterial = shaderMaterial(
 
       vec2 st = vUv;
 
-      if (distanceF < 0.2) {
+      float a = atan(uMouse.x,uMouse.y)+M_PI;
+      float r = M_PI* 2./float(3);
+
+      float s = cos(floor(.5+a/r)*r-r)*distanceF;
+
+      if (distanceF < 0.4) {
         st -= vec2(0.5);
 
         float d = (vUv.x - uMouse.x) * (uPrevMousePosition.y - uMouse.y) - (vUv.y - uMouse.y) * (uPrevMousePosition.x - uMouse.x);
   
         float angle = velocityP - st.y * st.x * velocityP;
-        angle *= 1. - distanceF / 0.2;
+        angle *= 1. - distanceF / 0.4;
         
+
         if (d < 0.) {
           st = rotate2d( sin(-angle), velocityP) * st;
         } else {
@@ -233,7 +239,7 @@ const Wave = () => {
     //ref.current.uMouse.y = 0.5 * (currentMousePosition[1] + 1);
   });
 
-  const [image] = useLoader(THREE.TextureLoader, ["sam.png"]);
+  const [image] = useLoader(THREE.TextureLoader, ["ex2.png"]);
 
   return (
     <mesh>
